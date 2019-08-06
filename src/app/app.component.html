@@ -1,9 +1,9 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-<button mat-icon-button color="accent">
-  <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
-</button>
-<router-outlet></router-outlet>
+<mat-sidenav-container >
+  <mat-sidenav #sidenav role="navigation">
+    <p>I am the sidenav</p>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button (click)="sidenav.toggle()">Show Sidenav</button>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
