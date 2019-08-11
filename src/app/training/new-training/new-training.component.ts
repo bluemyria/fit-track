@@ -12,7 +12,7 @@ import { Exercise } from '../exercise.model';
   styleUrls: ['./new-training.component.css']
 })
 export class NewTrainingComponent implements OnInit, OnDestroy {
-  private isLoading = false;
+  isLoading = false;
   exercises: Exercise[];
   exerciseSubscription: Subscription;
 
@@ -39,6 +39,8 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.exerciseSubscription.unsubscribe();
+    if ( this.exerciseSubscription ) {
+      this.exerciseSubscription.unsubscribe();
+    }
   }
 }
