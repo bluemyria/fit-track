@@ -1,6 +1,6 @@
 <section class="new-training" fxLayout="row" fxLayoutAlign="center center">
   <form (ngSubmit)="onStartTraining(f)" #f="ngForm">
-    <mat-card *ngIf="!isLoading && exercises" fxFlex.xs="100%" fxFlex="400px">
+    <mat-card *ngIf="!(isLoading$ | async) && exercises" fxFlex.xs="100%" fxFlex="400px">
       <mat-card-title fxLayoutAlign="center">
         Time to start a workout
       </mat-card-title>
@@ -21,7 +21,7 @@
         </button>
       </mat-card-actions>
     </mat-card>
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <mat-spinner *ngIf="(isLoading$ | async)"></mat-spinner>
     <button mat-button color="accent" type="button" *ngIf="!exercises" (click)="fetchExercises()">
         Fetch again
     </button>
