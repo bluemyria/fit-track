@@ -8,7 +8,6 @@ import { Exercise } from '../exercise.model';
 
 import * as fromRoot from '../../app.reducer';
 import * as fromTraining from '../training.reducer';
-import * as UI from '../../shared/ui.actions';
 
 @Component({
   selector: 'app-new-training',
@@ -21,7 +20,7 @@ export class NewTrainingComponent implements OnInit {
 
   constructor(
     private trainingService: TrainingService,
-    private store: Store<{ ui: fromTraining.State }>) { }
+    private store: Store<fromTraining.State>) { }
 
   ngOnInit() {
     this.isLoading$ = this.store.select(fromRoot.getIsLoading);

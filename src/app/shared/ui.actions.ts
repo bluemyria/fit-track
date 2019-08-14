@@ -12,4 +12,3 @@ export class StopLoading implements Action {
 }
 
 export type UIActions = StartLoading | StopLoading;
-

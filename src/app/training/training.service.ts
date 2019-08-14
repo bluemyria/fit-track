@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs/Subject';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
@@ -14,10 +13,6 @@ import * as fromTraining from './training.reducer';
 
 @Injectable()
 export class TrainingService {
-  exerciseChanged = new Subject<Exercise>();
-  exercisesChanged = new Subject<Exercise[]>();
-  finishedExercisesChanged = new Subject<Exercise[]>();
-
   private fbSubs: Subscription[] = [];
 
   constructor(
@@ -32,7 +27,6 @@ export class TrainingService {
       .collection('availableExercises')
       .snapshotChanges()
       .pipe(map(docArray => {
-        // throw(new Error());
         return docArray.map(doc => {
           return {
             id: doc.payload.doc.id,
@@ -41,15 +35,11 @@ export class TrainingService {
         });
       }))
       .subscribe((exercises: Exercise[]) => {
-        // console.log(exercises);
         this.store.dispatch(new UI.StopLoading());
-        // this.availableExercises = exercises;
-        // this.exercisesChanged.next([...this.availableExercises]);
         this.store.dispatch(new Training.SetAvailableTrainings(exercises));
       }, error => {
         this.store.dispatch(new UI.StopLoading());
         this.uiService.showSnackbar('Fetching Exercises failed, please try later again', 'OK', 3000);
-        this.exerciseChanged.next(null);
       }));
   }
 
@@ -58,15 +48,11 @@ export class TrainingService {
       .collection('finishedExercises')
       .valueChanges()
       .subscribe((exercises: Exercise[]) => {
-        // this.finishedExercises = exercises;
-        // this.finishedExercisesChanged.next(exercises);
         this.store.dispatch(new Training.SetFinishedTrainings(exercises));
       }));
   }
 
   startExercise(selectedId: string) {
-    // just for checking document update on db
-    // this.db.doc('availableExercises/' + selectedId).update({lastSelected: new Date()});
     this.store.dispatch(new Training.StartActiveTraining(selectedId));
   }
 
