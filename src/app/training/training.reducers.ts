@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action, createFeatureSelector, createSelector } from '@ngrx/store';
 
 import {
   TrainingActions,
@@ -52,4 +52,13 @@ export function trainingReducer( state = initialState, action: TrainingActions) 
   }
 }
 
-export const getIsAuth = (state: State) => state.isAuthenticated;
+export const getTrainingState = createFeatureSelector<TrainingState>('training');
+
+// export const getAvailableExercises = (state: TrainingState) => state.availableExercises;
+// export const getFinishedExercises = (state: TrainingState) => state.finishedExercises;
+// export const getActiveTraining = (state: TrainingState) => state.activeTraining;
+
+// better for ngrx internal mngmnt
+export const getAvailableExercises = createSelector(getTrainingState, (state: TrainingState) => state.availableExercises);
+export const getFinishedExercises = createSelector(getTrainingState, (state: TrainingState) => state.finishedExercises);
+export const getActiveTraining = createSelector(getTrainingState, (state: TrainingState) => state.activeTraining);
